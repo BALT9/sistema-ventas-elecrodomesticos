@@ -50,33 +50,22 @@
         <h2 class="text-2xl font-bold mb-6 text-center">Nuestros Productos</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             <?php foreach ($productos as $p): ?>
-                <div class="bg-white p-6 rounded shadow hover:shadow-lg transition">
+                <div class="bg-white p-6 rounded shadow hover:shadow-lg transition flex flex-col">
+                    <?php if (!empty($p['imagen'])): ?>
+                        <img src="<?= htmlspecialchars($p['imagen']) ?>" alt="<?= htmlspecialchars($p['nombre']) ?>" class="mb-4 w-full h-48 object-cover rounded">
+                    <?php else: ?>
+                        <div class="mb-4 w-full h-48 bg-gray-200 flex items-center justify-center text-gray-500 rounded">Sin Imagen</div>
+                    <?php endif; ?>
+
                     <h3 class="font-bold text-xl mb-2"><?= htmlspecialchars($p['nombre']) ?></h3>
                     <p class="text-gray-700 mb-2">Precio: $<?= number_format($p['precio'], 2) ?></p>
                     <p class="text-gray-500 mb-4">Stock: <?= $p['stock'] ?></p>
-                    <button class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Comprar</button>
+                    <button class="mt-auto w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Comprar</button>
                 </div>
             <?php endforeach; ?>
         </div>
     </section>
 
-    <!-- Beneficios -->
-    <section id="beneficios" class="bg-gray-100 py-16">
-        <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <div>
-                <h3 class="text-xl font-bold mb-2">Envío rápido</h3>
-                <p>Recibe tus productos en la puerta de tu hogar en tiempo récord.</p>
-            </div>
-            <div>
-                <h3 class="text-xl font-bold mb-2">Garantía</h3>
-                <p>Todos nuestros electrodomésticos cuentan con garantía oficial del fabricante.</p>
-            </div>
-            <div>
-                <h3 class="text-xl font-bold mb-2">Precios competitivos</h3>
-                <p>Ofrecemos los mejores precios del mercado con calidad garantizada.</p>
-            </div>
-        </div>
-    </section>
 
     <!-- Footer -->
     <footer id="contacto" class="bg-gray-800 text-white p-12 mt-12">
