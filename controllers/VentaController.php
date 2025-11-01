@@ -22,7 +22,6 @@ class VentaController
         require 'views/ventas/index.php';
     }
 
-
     public function create()
     {
         $clientes = $this->clienteModel->getAll();
@@ -48,9 +47,27 @@ class VentaController
 
     public function reporte()
     {
-        // Usamos el método que devuelve un array completo de productos
         $ventas = $this->ventaModel->getAllWithDetalle();
-
         require 'views/reportes/index.php';
+    }
+
+    public function delete()
+    {
+        if (!isset($_GET['id'])) {
+            header("Location: index.php?controller=Venta&action=index");
+            exit;
+        }
+
+        $id = (int)$_GET['id'];
+
+        try {
+            $this->ventaModel->delete($id);
+        } catch (Exception $e) {
+            $error = $e->getMessage();
+            // Opcional: mostrar error en un view o en el listado
+        }
+
+        header("Location: index.php?controller=Venta&action=index");
+        exit;
     }
 }

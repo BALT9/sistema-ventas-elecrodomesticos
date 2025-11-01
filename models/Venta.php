@@ -109,4 +109,16 @@ class Venta
         return $ventas;
     }
 
+    public function delete($id)
+    {
+        // Primero eliminamos los detalles
+        $stmt = $this->conn->prepare("DELETE FROM detalle_ventas WHERE id_venta=?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+
+        // Luego eliminamos la venta
+        $stmt2 = $this->conn->prepare("DELETE FROM ventas WHERE id=?");
+        $stmt2->bind_param("i", $id);
+        $stmt2->execute();
+    }
 }
