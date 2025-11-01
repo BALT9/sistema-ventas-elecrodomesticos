@@ -10,6 +10,7 @@ class Producto
         $this->conn = Database::conectar();
     }
 
+    // Obtener todos los productos
     public function getAll()
     {
         $sql = "SELECT * FROM productos";
@@ -17,6 +18,7 @@ class Producto
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    // Obtener producto por ID
     public function getById($id)
     {
         $stmt = $this->conn->prepare("SELECT * FROM productos WHERE id = ?");
@@ -25,20 +27,31 @@ class Producto
         return $stmt->get_result()->fetch_assoc();
     }
 
-    public function create($nombre, $descripcion, $categoria, $precio, $stock)
+    // Crear nuevo producto con imagen
+    public function create($nombre, $descripcion, $categoria, $precio, $stock, $imagen)
     {
-        $stmt = $this->conn->prepare("INSERT INTO productos (nombre, descripcion, categoria, precio, stock, creado_en) VALUES (?, ?, ?, ?, ?, NOW())");
-        $stmt->bind_param("sssdi", $nombre, $descripcion, $categoria, $precio, $stock);
+        $stmt = $this->conn->prepare("
+        INSERT INTO productos (nombre, descripcion, categoria, precio, stock, imagen, creado_en)
+        VALUES (?, ?, ?, ?, ?, ?, NOW())
+    ");
+        $stmt->bind_param("sssdis", $nombre, $descripcion, $categoria, $precio, $stock, $imagen);
         $stmt->execute();
     }
 
-    public function update($id, $nombre, $descripcion, $categoria, $precio, $stock)
+
+    // Actualizar producto
+    public function update($id, $nombre, $descripcion, $categoria, $precio, $stock, $imagen)
     {
-        $stmt = $this->conn->prepare("UPDATE productos SET nombre=?, descripcion=?, categoria=?, precio=?, stock=? WHERE id=?");
-        $stmt->bind_param("sssdii", $nombre, $descripcion, $categoria, $precio, $stock, $id);
+        $stmt = $this->conn->prepare("
+            UPDATE productos 
+            SET nombre=?, descripcion=?, categoria=?, precio=?, stock=?, imagen=? 
+            WHERE id=?
+        ");
+        $stmt->bind_param("sssdiss", $nombre, $descripcion, $categoria, $precio, $stock, $imagen, $id);
         $stmt->execute();
     }
 
+    // Eliminar producto
     public function delete($id)
     {
         $stmt = $this->conn->prepare("DELETE FROM productos WHERE id=?");

@@ -19,34 +19,40 @@ class ProductoController
     public function create()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $this->productoModel->create(
-                $_POST['nombre'],
-                $_POST['descripcion'],
-                $_POST['categoria'],
-                $_POST['precio'],
-                $_POST['stock']
-            );
+            $nombre = $_POST['nombre'];
+            $descripcion = $_POST['descripcion'];
+            $categoria = $_POST['categoria'];
+            $precio = $_POST['precio'];
+            $stock = $_POST['stock'];
+            $imagen = $_POST['imagen'] ?? null;
+
+            $this->productoModel->create($nombre, $descripcion, $categoria, $precio, $stock, $imagen);
+
             header('Location: index.php?controller=Producto&action=index');
             exit;
         }
+
         require 'views/productos/create.php';
     }
 
     public function edit($id)
     {
         $producto = $this->productoModel->getById($id);
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $this->productoModel->update(
-                $id,
-                $_POST['nombre'],
-                $_POST['descripcion'],
-                $_POST['categoria'],
-                $_POST['precio'],
-                $_POST['stock']
-            );
+            $nombre = $_POST['nombre'];
+            $descripcion = $_POST['descripcion'];
+            $categoria = $_POST['categoria'];
+            $precio = $_POST['precio'];
+            $stock = $_POST['stock'];
+            $imagen = $_POST['imagen'] ?? null;
+
+            $this->productoModel->update($id, $nombre, $descripcion, $categoria, $precio, $stock, $imagen);
+
             header('Location: index.php?controller=Producto&action=index');
             exit;
         }
+
         require 'views/productos/edit.php';
     }
 
