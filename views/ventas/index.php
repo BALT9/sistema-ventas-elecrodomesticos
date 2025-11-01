@@ -16,14 +16,8 @@ if (!isset($_SESSION['user'])) {
 <body class="flex h-screen bg-gray-100">
 
     <!-- Sidebar -->
-    <div class="w-64 bg-gray-800 text-white flex flex-col p-4">
-        <h2 class="text-2xl font-bold mb-4">Sistema Ventas</h2>
-        <a href="index.php?controller=Dashboard&action=index" class="block p-2 rounded hover:bg-gray-700 mb-2">Dashboard</a>
-        <a href="index.php?controller=Producto&action=index" class="block p-2 rounded hover:bg-gray-700 mb-2">Productos</a>
-        <a href="index.php?controller=Cliente&action=index" class="block p-2 rounded hover:bg-gray-700 mb-2">Clientes</a>
-        <a href="index.php?controller=Venta&action=index" class="block p-2 rounded bg-gray-700 mb-2">Ventas</a>
-        <a href="index.php?controller=Auth&action=logout" class="block p-2 mt-4 bg-red-600 rounded hover:bg-red-700 text-center">Cerrar sesión</a>
-    </div>
+    <?php include 'views/partials/sidebar.php'; ?>
+
 
     <!-- Main Content -->
     <div class="flex-1 p-8">

@@ -17,13 +17,13 @@ function cargarControlador($controlador)
 function cargarAccion($controller, $accion, $id = null)
 {
     if (isset($accion) && method_exists($controller, $accion)) {
-        if ($id == null) {
+        if ($id === null) {
             $controller->$accion();
         } else {
             $controller->$accion($id);
         }
     } else {
-        $accionDefault = ACCION_PRINCIPAL;
-        $controller->$accionDefault();
+        die("La acción '$accion' no existe en el controlador " . get_class($controller));
+        // o alternativamente: $controller->index();
     }
 }

@@ -75,4 +75,38 @@ class Venta
 
         return $id_venta;
     }
+
+    public function getAllWithDetalle()
+    {
+        $sql = "SELECT v.id, c.nombre as cliente, v.fecha
+            FROM ventas v
+            INNER JOIN clientes c ON v.id_cliente = c.id
+            ORDER BY v.id DESC";
+
+        $result = $this->conn->query($sql);
+        $ventas = [];
+
+        while ($row = $result->fetch_assoc()) {
+            $venta_id = $row['id'];
+
+            $sqlProductos = "SELECT p.nombre, dv.cantidad, dv.precio_unitario, dv.subtotal
+                         FROM detalle_ventas dv
+                         INNER JOIN productos p ON dv.id_producto = p.id
+                         WHERE dv.id_venta = $venta_id";
+            $productosResult = $this->conn->query($sqlProductos);
+
+            $productos = [];
+            while ($prod = $productosResult->fetch_assoc()) {
+                $productos[] = $prod;
+            }
+
+            $row['productos'] = $productos;
+            $row['total'] = array_sum(array_column($productos, 'subtotal'));
+
+            $ventas[] = $row;
+        }
+
+        return $ventas;
+    }
+
 }

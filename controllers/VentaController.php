@@ -45,4 +45,12 @@ class VentaController
 
         require 'views/ventas/create.php';
     }
+
+    public function reporte()
+    {
+        // Usamos el método que devuelve un array completo de productos
+        $ventas = $this->ventaModel->getAllWithDetalle();
+
+        require 'views/reportes/index.php';
+    }
 }
