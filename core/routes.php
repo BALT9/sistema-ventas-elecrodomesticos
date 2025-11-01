@@ -1,0 +1,29 @@
+<?php
+function cargarControlador($controlador)
+{
+    $nombreControlador = ucwords($controlador) . "Controller";
+    $archivoControlador = 'controllers/' . $nombreControlador . '.php';
+
+    if (!is_file($archivoControlador)) {
+        $controlador = CONTROLADOR_PRINCIPAL;
+        $nombreControlador = ucwords($controlador) . "Controller";
+        $archivoControlador = 'controllers/' . $nombreControlador . '.php';
+    }
+
+    require_once $archivoControlador;
+    return new $nombreControlador();
+}
+
+function cargarAccion($controller, $accion, $id = null)
+{
+    if (isset($accion) && method_exists($controller, $accion)) {
+        if ($id == null) {
+            $controller->$accion();
+        } else {
+            $controller->$accion($id);
+        }
+    } else {
+        $accionDefault = ACCION_PRINCIPAL;
+        $controller->$accionDefault();
+    }
+}
