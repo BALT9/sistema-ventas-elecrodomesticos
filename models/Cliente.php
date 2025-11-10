@@ -12,10 +12,11 @@ class Cliente
 
     public function getAll()
     {
-        $sql = "SELECT * FROM clientes";
+        $sql = "SELECT * FROM clientes WHERE activo=1";
         $result = $this->conn->query($sql);
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+
 
     public function getById($id)
     {
@@ -41,8 +42,8 @@ class Cliente
 
     public function delete($id)
     {
-        $stmt = $this->conn->prepare("DELETE FROM clientes WHERE id=?");
+        $stmt = $this->conn->prepare("UPDATE clientes SET activo=0 WHERE id=?");
         $stmt->bind_param("i", $id);
-        $stmt->execute();
+        return $stmt->execute();
     }
 }

@@ -13,12 +13,21 @@ class AuthController
     public function login()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $usuario = $_POST['usuario']; // CAMBIO: antes $email
-            $clave = $_POST['clave'];     // CAMBIO: antes $password
+            $usuario = $_POST['usuario'];
+            $clave = $_POST['clave'];
 
-            $user = $this->userModel->login($usuario, $clave); // El modelo ya hace MD5
+            $user = $this->userModel->login($usuario, $clave);
+
             if ($user) {
+                //Iniciar sesión
                 $_SESSION['user'] = $user;
+
+                //Opción para Recordarme (solo si el usuario la marca)
+                if (isset($_POST['recordarme'])) {
+                    // Guarda el nombre del usuario por 30 días
+                    setcookie("usuarioRecordado", $user['usuario'], time() + (86400 * 30), "/");
+                }
+
                 header('Location: index.php?controller=Dashboard&action=index');
                 exit;
             } else {
@@ -29,6 +38,7 @@ class AuthController
             require 'views/auth/login.php';
         }
     }
+
 
     public function logout()
     {

@@ -13,10 +13,11 @@ class Producto
     // Obtener todos los productos
     public function getAll()
     {
-        $sql = "SELECT * FROM productos";
+        $sql = "SELECT * FROM productos WHERE activo=1";
         $result = $this->conn->query($sql);
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+
 
     // Obtener producto por ID
     public function getById($id)
@@ -51,11 +52,11 @@ class Producto
         $stmt->execute();
     }
 
-    // Eliminar producto
+    // "Eliminar" producto marcándolo como inactivo
     public function delete($id)
     {
-        $stmt = $this->conn->prepare("DELETE FROM productos WHERE id=?");
+        $stmt = $this->conn->prepare("UPDATE productos SET activo=0 WHERE id=?");
         $stmt->bind_param("i", $id);
-        $stmt->execute();
+        return $stmt->execute();
     }
 }

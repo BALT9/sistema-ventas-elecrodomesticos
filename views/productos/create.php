@@ -28,47 +28,83 @@ if (!isset($_SESSION['user'])) {
     <div class="flex-1 p-8 overflow-y-auto">
         <h1 class="text-3xl font-bold mb-6 text-gray-800">Agregar Producto</h1>
 
-        <form method="POST" class="bg-white p-6 rounded-lg shadow-md max-w-lg">
+        <form method="POST" id="formProducto" class="bg-white p-6 rounded-lg shadow-md max-w-lg">
             <div class="mb-4">
                 <label class="block font-bold mb-1 text-gray-700">Nombre</label>
-                <input type="text" name="nombre" class="w-full border p-2 rounded focus:ring focus:ring-blue-200" required>
+                <input type="text" name="nombre" id="nombre" class="w-full border p-2 rounded focus:ring focus:ring-blue-200" required>
             </div>
 
             <div class="mb-4">
                 <label class="block font-bold mb-1 text-gray-700">Descripción</label>
-                <textarea name="descripcion" class="w-full border p-2 rounded focus:ring focus:ring-blue-200"></textarea>
+                <textarea name="descripcion" id="descripcion" class="w-full border p-2 rounded focus:ring focus:ring-blue-200"></textarea>
             </div>
 
             <div class="mb-4">
                 <label class="block font-bold mb-1 text-gray-700">Categoría</label>
-                <input type="text" name="categoria" class="w-full border p-2 rounded focus:ring focus:ring-blue-200">
+                <input type="text" name="categoria" id="categoria" class="w-full border p-2 rounded focus:ring focus:ring-blue-200">
             </div>
 
             <div class="mb-4">
                 <label class="block font-bold mb-1 text-gray-700">Precio</label>
-                <input type="number" name="precio" step="0.01"
-                    class="w-full border p-2 rounded focus:ring focus:ring-blue-200" required>
+                <input type="number" name="precio" id="precio" step="0.01" class="w-full border p-2 rounded focus:ring focus:ring-blue-200" required>
             </div>
 
             <div class="mb-4">
                 <label class="block font-bold mb-1 text-gray-700">Stock</label>
-                <input type="number" name="stock" class="w-full border p-2 rounded focus:ring focus:ring-blue-200" required>
+                <input type="number" name="stock" id="stock" class="w-full border p-2 rounded focus:ring focus:ring-blue-200" required>
             </div>
 
-            <!-- Nuevo campo: URL de Imagen -->
             <div class="mb-6">
                 <label class="block font-bold mb-1 text-gray-700">URL de Imagen</label>
-                <input type="url" name="imagen" placeholder="https://ejemplo.com/imagen.jpg"
-                    class="w-full border p-2 rounded focus:ring focus:ring-blue-200">
+                <input type="url" name="imagen" id="imagen" placeholder="https://ejemplo.com/imagen.jpg" class="w-full border p-2 rounded focus:ring focus:ring-blue-200">
                 <p class="text-sm text-gray-500 mt-1">Pega aquí la URL de la imagen del producto.</p>
             </div>
 
-            <button type="submit"
-                class="w-full py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
+            <button type="submit" class="w-full py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
                 Guardar Producto
             </button>
         </form>
     </div>
+
+    <script>
+        // Función para guardar datos en localStorage
+        function guardarDatos() {
+            const producto = {
+                nombre: document.getElementById('nombre').value,
+                descripcion: document.getElementById('descripcion').value,
+                categoria: document.getElementById('categoria').value,
+                precio: document.getElementById('precio').value,
+                stock: document.getElementById('stock').value,
+                imagen: document.getElementById('imagen').value
+            };
+            localStorage.setItem('formProducto', JSON.stringify(producto));
+        }
+
+        // Escuchar cambios en todos los campos del formulario
+        document.querySelectorAll('#formProducto input, #formProducto textarea').forEach(campo => {
+            campo.addEventListener('input', guardarDatos);
+        });
+
+        // Recuperar datos al cargar la página
+        window.addEventListener('load', () => {
+            const guardado = localStorage.getItem('formProducto');
+            if (guardado) {
+                const datos = JSON.parse(guardado);
+                document.getElementById('nombre').value = datos.nombre || '';
+                document.getElementById('descripcion').value = datos.descripcion || '';
+                document.getElementById('categoria').value = datos.categoria || '';
+                document.getElementById('precio').value = datos.precio || '';
+                document.getElementById('stock').value = datos.stock || '';
+                document.getElementById('imagen').value = datos.imagen || '';
+            }
+        });
+
+        // Limpiar localStorage al enviar el formulario
+        document.getElementById('formProducto').addEventListener('submit', () => {
+            localStorage.removeItem('formProducto');
+        });
+    </script>
+
 </body>
 
 </html>
