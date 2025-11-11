@@ -34,13 +34,13 @@ class Venta
             throw new Exception("Debe seleccionar al menos un producto.");
         }
 
-        // 1. Insertar en tabla ventas
+        // Insertar en tabla ventas
         $stmt = $this->conn->prepare("INSERT INTO ventas (id_usuario, id_cliente) VALUES (?, ?)");
         $stmt->bind_param("ii", $id_usuario, $id_cliente);
         $stmt->execute();
         $id_venta = $this->conn->insert_id;
 
-        // 2. Insertar cada producto en detalle_ventas y actualizar stock
+        // Inserta cada producto en detalle_ventas y actualizar stock
         foreach ($productos as $id_producto => $cantidad) {
             $cantidad = (int)$cantidad;
             if ($cantidad <= 0) continue;

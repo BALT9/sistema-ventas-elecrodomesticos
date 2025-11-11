@@ -70,17 +70,7 @@ if (!empty($ventas)) {
                 </div>
             </header>
 
-            <!-- Botón Exportar y Resumen -->
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8">
-                <a href="index.php?controller=Reporte&action=exportCSV"
-                    class="px-5 py-3 bg-green-600 text-white rounded-lg shadow-lg hover:bg-green-700 transition flex items-center space-x-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 4v16h16V4H4zm4 8h8m-8 4h8M8 8h8" />
-                    </svg>
-                    <span>Exportar CSV</span>
-                </a>
 
                 <?php if (!empty($ventas)): ?>
                     <div class="mt-6 sm:mt-0 flex space-x-6 bg-white rounded-xl shadow p-4 border border-gray-100">
@@ -103,10 +93,10 @@ if (!empty($ventas)) {
                         class="bg-white rounded-xl shadow-md hover:shadow-lg transition transform hover:-translate-y-1 overflow-hidden mb-8 border border-gray-100">
                         <div class="p-6">
                             <h2 class="font-bold text-xl text-gray-800 mb-2">
-                                🧾 Venta #<?= $v['id'] ?> - Cliente: <span
+                                Venta #<?= $v['id'] ?> - Cliente: <span
                                     class="text-blue-700"><?= htmlspecialchars($v['cliente']) ?></span>
                             </h2>
-                            <p class="text-gray-600 mb-4">📅 Fecha: <?= htmlspecialchars($v['fecha']) ?></p>
+                            <p class="text-gray-600 mb-4">Fecha: <?= htmlspecialchars($v['fecha']) ?></p>
 
                             <div class="overflow-x-auto">
                                 <table class="min-w-full bg-gray-50 rounded-xl overflow-hidden border border-gray-200">

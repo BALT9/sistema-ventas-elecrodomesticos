@@ -12,7 +12,7 @@ class User
 
     public function login($usuario, $clave)
     {
-        // Convertir la clave ingresada a MD5 (igual que la que tienes guardada)
+        // Encripta la contraseña
         $clave = md5($clave);
 
         // Cambiamos la tabla 'users' por 'usuarios'
